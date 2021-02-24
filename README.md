@@ -40,20 +40,22 @@ effettuate.
 ## Software utilizzati
 
 Eclipse IDE 
+
 Database Derby
+
 Draw.io 
 
-# Chi mantiene e contribuisce al progetto
+## Chi mantiene e contribuisce al progetto
 
 GiosueOrefice
 
 
-# Roadmap
+## Roadmap
 
 Realizzare il gioco del monopoly completo.
 
 
-# Come gli utenti possono iniziare con il progetto
+## Come gli utenti possono iniziare con il progetto
 
 Per iniziare il progetto bisogna utilizzare il DB Derby 
 
