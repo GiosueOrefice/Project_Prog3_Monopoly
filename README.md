@@ -12,8 +12,8 @@ da tavolo Monopoli (vedi sotto per i dettagli). Sono considerati 6 giocatori
 identifcati dal nome e un segnalino. I giocatori muovono a turno il loro segnalino
 su una plancia di gioco composta da diversi territori. Una Banca ha il ruolo di
 gestire i soldi, i terreni, le case e gli alberghi.
-Lo scopo del gioco è di trarre profitto, comprando e vendendo le proprieta che si
-trovano lungo il percorso della plancia di gioco, sino a diventare il giocatore piu
+Lo scopo del gioco è di trarre profitto, comprando e vendendo le proprietà che si
+trovano lungo il percorso della plancia di gioco, sino a diventare il giocatore più
 ricco (monopolista). Partendo dalla casella VIA, ogni giocatore a turno muove
 il proprio segnalino lungo il percorso, in base al punteggio ottenuto lanciando
 due dadi. Quando il segnalino si ferma su una proprietà libera, il giocatore
@@ -41,12 +41,6 @@ effettuate.
 # Chi mantiene e contribuisce al progetto:
 
 GiosueOrefice
-
-# Descrizione
-
-Il progetto non è altro che una simulazione semplificata del gioco Monopoly il quale prevede la visualizzazione delle varie fasi del gioco, la possibilità di salvare e ripristinare una partita e la visualizzazione della classifica dei vincitori in diverse partite effettuate.
-Linguaggio di programmazione utilizzato: Java
-
 
 
 # Roadmap
