@@ -1,11 +1,11 @@
 # Monopoly
 
-# Progammazione III-Lab
+## Progammazione III-Lab
 Progetto di Programmazione III - Parthenope 
 Anno 2020/2021
 
 
-# Specifiche del progetto
+## Specifiche del progetto
 
 Si vuole sviluppare un programma per la simulazione (semplifcata) del gioco
 da tavolo Monopoli (vedi sotto per i dettagli). Sono considerati 6 giocatori
@@ -37,8 +37,12 @@ la visualizzazione delle varie fasi del gioco, la possibilità di salvare e ripr
 una partita e la visualizzazione della classifica dei vincitori in diverse partite
 effettuate.
 
-## Eclipse IDE 2020/12
-Database MySQL 8.0
+## Software utilizzati
+
+Eclipse IDE 
+Database Derby
+Draw.io 
+
 # Chi mantiene e contribuisce al progetto
 
 GiosueOrefice
@@ -54,7 +58,3 @@ Realizzare il gioco del monopoly completo.
 Per iniziare il progetto bisogna utilizzare il DB Derby 
 
 
-
-# Stato del progetto
-
-Per ora terminato
