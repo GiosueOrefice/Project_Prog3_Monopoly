@@ -37,7 +37,8 @@ la visualizzazione delle varie fasi del gioco, la possibilità di salvare e ripr
 una partita e la visualizzazione della classifica dei vincitori in diverse partite
 effettuate.
 
-
+## Eclipse IDE 2020/12
+Database MySQL 8.0
 # Chi mantiene e contribuisce al progetto
 
 GiosueOrefice
