@@ -38,7 +38,7 @@ una partita e la visualizzazione della classifica dei vincitori in diverse parti
 effettuate.
 
 
-# Chi mantiene e contribuisce al progetto:
+# Chi mantiene e contribuisce al progetto
 
 GiosueOrefice
 
@@ -54,6 +54,6 @@ Per iniziare il progetto bisogna utilizzare il DB Derby
 
 
 
-# Stato del progetto: 
+# Stato del progetto
 
 Per ora terminato
