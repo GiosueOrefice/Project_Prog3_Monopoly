@@ -57,6 +57,5 @@ Realizzare il gioco del monopoly completo.
 
 ## Come gli utenti possono iniziare con il progetto
 
-Per iniziare il progetto bisogna utilizzare il DB Derby 
-
+Installare Derby e scaricare il progetto
 
