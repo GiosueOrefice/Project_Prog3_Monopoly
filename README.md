@@ -1,8 +1,8 @@
 # Monopoly
 
-## Progammazione III-Lab
+### Progammazione III-Lab
 Progetto di Programmazione III - Parthenope 
-Anno 2020/2021
+* Anno 2020/2021
 
 
 ## Specifiche del progetto
