@@ -15,7 +15,7 @@ public class Via extends Terreno {
 		this.soldiVia = soldi;
 	}
 	/**
-	   @see (default package).Terreno#esegui 
+	   @see Strategy.Terreno#esegui 
 	   Quando il giocatore si ferma sulla casella VIA la banca versa al giocatore un quantitativo di denaro 
 		
 	   @param player il giocatore che si trova sul terreno VIA 
