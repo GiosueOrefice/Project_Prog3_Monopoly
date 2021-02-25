@@ -18,7 +18,7 @@ public class Tassa extends Terreno{
 	}
 
 	/**
-	   @see (default package).Terreno#esegui 
+	   @see Strategy.Terreno#esegui 
 	   Quando il giocatore si ferma su un terreno TASSA deve pagare il prezzo della tassa alla banca
 		
 	   @param player il giocatore che si trova sulla casella tassa

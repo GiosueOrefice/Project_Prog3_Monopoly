@@ -83,8 +83,8 @@ public class Board {
 	@param player 
 	@return void
 	*/
-	public void playerLanded(int num,Player player) {
-		terreno[num].esegui(player);
+	public void playerLanded(Player player) {
+		terreno[player.getLocation()].esegui(player);
 	}
 	
 	/**
@@ -110,10 +110,7 @@ public class Board {
 	public int calcolaPosizione(int num1,int num2,Player player) {
 		if(player.getLocation()+num1+num2>11)
 			terreno[0].esegui(player);
-		player.setLocation(player.getLocation()+num1); 
-		player.setLocation(player.getLocation()%12);
-		player.setLocation(player.getLocation()+num2); 
-		player.setLocation(player.getLocation()%12);
+		player.setLocation((player.getLocation()+num1+num2)%numTerreni); 
 
 		return player.getLocation();
 	}

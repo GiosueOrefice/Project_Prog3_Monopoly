@@ -39,7 +39,7 @@ public class Proprieta extends Terreno {
 	}
 
 	/**
-	   @see (default package).Terreno#esegui 
+	   @see Strategy.Terreno#esegui 
 	   Quando il giocatore si ferma su una proprieta' libera, il giocatore
 		puo' acquistarla dalla Banca, pagando il prezzo indicato sulla casella e riportato
 		anche sul contratto, altrimenti la proprieta viene subito messa all'asta e ceduta
@@ -49,7 +49,7 @@ public class Proprieta extends Terreno {
 		l'affitto al propietario 
 		
 	   @param player il giocatore che si trova su questa proprieta
-	   @return void
+	   @return 
 	*/
 	@Override
 	public void esegui(Player player) {
@@ -83,7 +83,7 @@ public class Proprieta extends Terreno {
 	Scopo del metodo: Chiedere al giocatore se vuole acquistare la proprieta, a seconda della risposta
 	verranno eseguite operazione diverse
 	@param player giocatore a cui chiedere se vuole comprare la proprieta
-	@return void
+	@return 
 	*/
 	public void askBuy(Player player)
 	{
