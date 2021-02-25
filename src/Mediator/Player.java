@@ -72,22 +72,20 @@ public class Player extends AbstractPlayer implements Cloneable
 			Banca.costruisciAlbergo(property);
 		}
 	}
-
+	
+	@Override
 	public boolean equals(Object o) {
 		Player q = (Player)o;
 		return this.name.equals(q.getName());
-
 	}
 	
 	@Override
-	public void bid(int price) 
-	{ 
+	public void bid(int price) { 
 		this.price = price; 
 	} 
 
 	@Override
-	public void cancelTheBid() 
-	{ 
+	public void cancelTheBid() { 
 		this.price = -1; 
 	} 
 	
@@ -172,7 +170,7 @@ public class Player extends AbstractPlayer implements Cloneable
 		this.mediator = mediator;
 	}
 
-
+	@Override
 	public Object clone() {
 		try {
 			return super.clone();
