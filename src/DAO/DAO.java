@@ -11,32 +11,32 @@ import Model.StateGame;
 public interface DAO {
 	/**
 	Scopo del metodo: inserire nel DB lo stato di una partita
-	@param state Stato del gioco da salvare
-	@return void
+	@param StateGame Stato del gioco da salvare
+	@return 
 	*/
 	public void insert(StateGame state);
 	/**
 	Scopo del metodo: aggiornare nel DB lo stato di una partita
-	@param state Stato del gioco da aggiornare
-	@return void
+	@param StateGame Stato del gioco da aggiornare
+	@return 
 	*/
-	public void update(StateGame state);
+	public default void update(StateGame state) {};
 	/**
 	Scopo del metodo: eliminare nel DB lo stato di una partita
-	@param idGame id dello stato da eliminare
+	@param int  id dello stato da eliminare
 	@return void
 	*/
 	public default void delete(int idGAME) {};
 	/**
 	Scopo del metodo: Trovare tutti i vincitori delle partite
 	@param //
-	@return ArrayList<Player>
+	@return ArrayList<Player> 
 	*/
-	public ArrayList<Player> findWinner();
+	public ArrayList<Player> findAllWinner();
 	
 	/**
 	Scopo del metodo: trovare una partita salvata
-	@param id intero che indica lo stato della partita da cercare
+	@param int id intero che indica lo stato della partita da cercare
 	@return StateGame
 	*/
 	public StateGame findGame(int id);

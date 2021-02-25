@@ -14,15 +14,16 @@ import java.sql.*;
 
 public class DerbyDB implements DAO{
 
-	private String jdbcURL;
+	private String jdbcURL; // stringa per collegarsi al db
 	private String sql;
 	private Connection connection;
 	private Statement statement;
-	private static DerbyDB instance;
+	private static DerbyDB instance; //Singleton 
 
 	private DerbyDB() {	
 		jdbcURL = "jdbc:derby:salesdb;create=true";
-		try {
+		
+		try { //Crea la tabella Game
 			connection = DriverManager.getConnection(jdbcURL);
 			statement = connection.createStatement();
 			sql = "Create Table Game (id_G int not null,"+
@@ -31,26 +32,28 @@ public class DerbyDB implements DAO{
 			statement.executeUpdate(sql);
 		} catch (SQLException e) {}
 
+		try { //Crea la tabella Player
 		sql = "Create Table Player (id int not null generated always as identity,"+
 				"Nome varchar(25), Location int, Money int, Prigione boolean, TurniPrigione int,"
 				+ "checkCostruire boolean,"
 				+ "Game int, primary key(id), foreign key(Game) references Game(id_G))";	
-		try {
+		
 			statement.executeUpdate(sql);
 		} catch (SQLException e) {}
 
+		try { //Crea la tabella Proprieta
 		sql = "Create Table Proprieta (id_P int not null generated always as identity,"+
 				"Nome varchar(25), NumCase int, Albergo boolean, Player int,Game int, primary key(id_P), "
 				+ "foreign key(Game) references Game(id_G))";
 
-		try {
+		
 			statement.executeUpdate(sql);
 		} catch (SQLException e) {}
 
 
 	}
 
-	public static DerbyDB getInstance() {
+	public static DerbyDB getInstance()  {
 		if (instance == null) 
 			instance = new DerbyDB();
 		return instance;
@@ -61,23 +64,22 @@ public class DerbyDB implements DAO{
 		int rows;
 		try {
 			ResultSet result;
-			int idGame =-2;
+			int idGame =0;
 			sql = "Select * from Game";
 			result= statement.executeQuery(sql);
-			while (result.next()) {
+			
+			while (result.next()) 
 				idGame = result.getInt(1);
 
-			}
-
 			idGame+=1;
-
+			//Inserisci nella tabella game
 			sql = "Insert into Game (id_G,N,i,numGiocatori,winner) values (" + idGame +"," +
 					state.getN() + "," + state.getCurrentPlayer() + "," + state.getNumGiocatoriInGara() + "," + state.getWinner() + ")";
 			rows = statement.executeUpdate(sql);
 			if(rows !=1)
 				System.out.println("error");
 
-
+			//Inserisci nella tabella Player
 			Player[] players = state.getPlayers();
 			for(int j=0;j<state.getN();j++) {
 				sql = "Insert into Player (Nome,Location,Money,Prigione,TurniPrigione,checkCostruire,Game) values"
@@ -89,14 +91,14 @@ public class DerbyDB implements DAO{
 					System.out.println("error");
 			}
 
+			//Inserisci nella tabella Proprieta
 			Board board = state.getBoard();
 			int index=-1;
 			for(int j=0;j<12;j++) {
 				if(board.getSquare(j) instanceof Proprieta) {
 					Proprieta p = (Proprieta) board.getSquare(j);
-					if(p.getPlayer()!=null) {
-						for(int z=0;z<state.getN();z++) {
-
+					if(p.getPlayer()!=null) { //controlla se la proprieta è stata acquista 
+						for(int z=0;z<state.getN();z++) { 
 							if(players[z].getName().equals(p.getPlayer().getName()))
 								index=z;
 						}
@@ -119,19 +121,15 @@ public class DerbyDB implements DAO{
 		}
 	}
 
-	@Override
-	public void update(StateGame state) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
-	public ArrayList<Player> findWinner() {
+	public ArrayList<Player> findAllWinner(){
 		ResultSet result;
 		ArrayList<Player> players = new ArrayList<Player>();
 		sql = "Select * from Game";
 		try {
 			result= statement.executeQuery(sql);
+			//scorri tutte le righe della tabella ed ottieni i vincitori
 			while(result.next()) 
 				players.add(players.size(), new Player("Player" + result.getInt(5)));
 
@@ -143,13 +141,13 @@ public class DerbyDB implements DAO{
 	}
 
 	@Override
-	public StateGame findGame(int id) {
+	public StateGame findGame(int id){
 		@SuppressWarnings("unused")
 		StateGame state;
 		Player[] players;
 		boolean check=false;
 		int i=-1,n=0,numGiocatori=0,winner=-1;
-		try {
+		try { //rova il game con l'id di input
 			ResultSet result;
 			sql = "Select * from Game";
 			result= statement.executeQuery(sql);
@@ -163,11 +161,11 @@ public class DerbyDB implements DAO{
 					check=true;
 				}
 			}
-			if(!check)
+			if(!check) //se non lo trova 
 				return null;
 
 			players = new Player[n];
-
+			//trova i giocatori della partita
 			sql = "Select * from Player";
 			result= statement.executeQuery(sql);
 			int z=0;
@@ -182,7 +180,8 @@ public class DerbyDB implements DAO{
 					z++;
 				}
 			}
-
+			
+			//trova le proprieta della partita
 			sql = "Select * from Proprieta";
 			result= statement.executeQuery(sql);
 			Board  board = new Board(n);
