@@ -3,7 +3,6 @@ import javax.swing.*;
 
 import DAO.DAO;
 import DAO.DerbyDB;
-import Mediator.Mediator;
 import Mediator.Player;
 import Model.Banca;
 import Model.Dado;
@@ -19,10 +18,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 /**
-*
-* @version n.n (24-02-2021)
-* @author Giosue' Orefice
-*/
+ *
+ * @version n.n (24-02-2021)
+ * @author Giosue' Orefice
+ */
 public class GameGUI extends JFrame {  
 
 	private int n;
@@ -37,20 +36,19 @@ public class GameGUI extends JFrame {
 	private JButton nextButton;
 	private JButton costruisciButton;
 	private JLabel giocatoreLabel;
-	private JTextArea giocatoreSTATS;
-	private JPanel panel1;
+	private JTextArea giocatoreSTATS; 
 	private JTextArea bancaSTATS;
 	private PanelDadi dadoPanelUno,dadoPanelDue;
 	private StateGame state;
 	private DAO db;
 
-	
+
 	public GameGUI(StateGame state) {
 		super("MONOPOLY");
 		this.state = state;
 		this.n= state.getN();
 		this.currentPlayer = state.getCurrentPlayer();
-		
+
 		this.board = state.getBoard();
 		this.numGiocatoriInGara =state.getNumGiocatoriInGara();
 		this.players = state.getPlayers();
@@ -59,27 +57,27 @@ public class GameGUI extends JFrame {
 		due = new Dado();
 		dadoPanelUno = new PanelDadi(1);
 		dadoPanelDue = new PanelDadi(1); 
-		
-		db = DerbyDB.getInstance();
-		
-		panel1 = new JPanel();
-		panel1.setLayout(new GridLayout(4,0));
-
-		for(int j=0;j<16;j++) 
-			panel1.add(board.getSquarePanel(j));
 
 	}
 
 
 	public void play() {
 		EventQueue.invokeLater(new Runnable() {
+			@SuppressWarnings("static-access")
 			public void run() {
 				JFrame jframe = new JFrame("MONOPOLY");
 				jframe.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 				dadoPanelUno = (PanelDadi) board.getSquarePanel(9);
 				dadoPanelDue = (PanelDadi) board.getSquarePanel(10);
+				db = DerbyDB.getInstance();
+				//panel 1 parte di sinistra del frame, ha un griglia 4*4
+				JPanel panel1 = new JPanel();
+				panel1.setLayout(new GridLayout(4,4));
 
+				for(int j=0;j<16;j++) 
+					panel1.add(board.getSquarePanel(j));
+				//panel2 il lato destro del frame
 				JPanel panel2 = new JPanel();
 				giocatoreLabel = new JLabel();
 				panel2.add(giocatoreLabel,BorderLayout.NORTH);
@@ -109,13 +107,13 @@ public class GameGUI extends JFrame {
 				jframe.add(panel2);
 				nextButton.setEnabled(false);
 				costruisciButton.setEnabled(false);
-				
+				//Gestione click sul bottone prossimo turno
 				nextButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						do{
 							if(++currentPlayer >= n)
 								currentPlayer=0;
-						}while (players[currentPlayer].getMoney() <= 0 );
+						}while (players[currentPlayer].getMoney() <= 0 ); //trova indice del prossimo giocatore 
 
 						giocatoreLabel.setText("E' IL TURNO DI:  " + players[currentPlayer].getName());
 						giocatoreSTATS.setText("STATISTICHE\n"+ players[currentPlayer].getStatistiche() +
@@ -123,24 +121,25 @@ public class GameGUI extends JFrame {
 						nextButton.setEnabled(false);
 						dadiButton.setEnabled(true);
 						bancaSTATS.setText("OPERAZIONI");
-						if(players[currentPlayer].isCostruzione())
+						if(players[currentPlayer].isCostruzione()) //se può costruire 
 							costruisciButton.setEnabled(true);
 						else costruisciButton.setEnabled(false);
 					}
 				});
 
-
+				//Gestione click sul bottone Lancia Dadi
 				dadiButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						pos=players[currentPlayer].getLocation();
 						PanelTerreno k1 =  (PanelTerreno) board.getSquarePanel(Utily.conversioneGrafica(players[currentPlayer].getLocation()));
-						if(!players[currentPlayer].isPrigione()){
+						if(!players[currentPlayer].isPrigione()){ //se il giocatore non è in prigione lancia i dadi
 							int result1 = uno.lancia();
 							dadoPanelUno.setResult(result1); 
 							int result2 = due.lancia();
 							dadoPanelDue.setResult(result2); 
 							pos= board.calcolaPosizione(result1, result2, players[currentPlayer]);
 
-							PanelTerreno k2 =  (PanelTerreno) board.getSquarePanel(Utily.conversioneGrafica(players[currentPlayer].getLocation()));
+							PanelTerreno k2 =  (PanelTerreno) board.getSquarePanel(Utily.conversioneGrafica(pos));
 
 							k1.setGiocatori(currentPlayer, false);
 							k2.setGiocatori(currentPlayer, true);
@@ -150,38 +149,36 @@ public class GameGUI extends JFrame {
 							k2.repaint();
 							k1.repaint();
 
-						}
-						else 
-							pos=players[currentPlayer].getLocation();
+						}	
 
-						board.playerLanded(pos,players[currentPlayer]);
-						giocatoreSTATS.setText("STATISTICHE\n"+ players[currentPlayer].getStatistiche() + board.getSquare(players[currentPlayer].getLocation()).getName());
+						board.playerLanded(players[currentPlayer]); //esegui operazione del terreno
+						giocatoreSTATS.setText("STATISTICHE\n"+ players[currentPlayer].getStatistiche() + board.getSquare(pos).getName());
 						nextButton.setEnabled(true);
 						dadiButton.setEnabled(false);
 						bancaSTATS.setText("OPERAZIONI\n" +Banca.getMessage());
-						if(players[currentPlayer].isCostruzione())
+						if(players[currentPlayer].isCostruzione()) //controllare se ora può costruire
 							costruisciButton.setEnabled(true);
-						checkLosePlayer();
+						checkLosePlayer(); //controlla se ha perso
 					}
 				});
-
+				//Gestione click sul bottone Costruisci
 				costruisciButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						String input=JOptionPane.showInputDialog(null,"Digita il nome della proprieta", "Costruzione",
-								JOptionPane.QUESTION_MESSAGE); 
-						try {
+						try { //Digitare il nome della proprieta
+							String input=JOptionPane.showInputDialog(null,"Digita il nome della proprieta", "Costruzione",
+									JOptionPane.QUESTION_MESSAGE); 	
 							int posizione = board.getSquare(input);
 
-							if(posizione == -1) {
+							if(posizione == -1) { //se ha inserito un nome che non esiste o sbagliato
 								JOptionPane.showMessageDialog (null,
 										"INSERISCI IL NOME CORRETTO RISPETTANDO MAIUSCOLE E MINUSCOLE",
 										"ERRORE",
 										JOptionPane.ERROR_MESSAGE);
 							}
-							else if (board.getSquare(posizione) instanceof Proprieta) {
+							else if (board.getSquare(posizione) instanceof Proprieta) { //se il nome inserito è una proprieta
 
 								Proprieta p = (Proprieta) board.getSquare(posizione);
-								if(p.isCheckCostruire() && players[currentPlayer].equals(p.getPlayer())) {
+								if(p.isCheckCostruire() && players[currentPlayer].equals(p.getPlayer())) { //se si può costruire su quella proprieta ed è lui il proprietario
 
 									players[currentPlayer].costruisci(p);
 									PanelTerreno k2 =  (PanelTerreno) board.getSquarePanel(Utily.conversioneGrafica(posizione));
@@ -189,7 +186,7 @@ public class GameGUI extends JFrame {
 									bancaSTATS.setText("OPERAZIONI\n" +Banca.getMessage());
 									giocatoreSTATS.setText("STATISTICHE\n"+ players[currentPlayer].getStatistiche() + board.getSquare(players[currentPlayer].getLocation()).getName());
 								}
-								else {
+								else { //non può costruire su quella proprieta
 									JOptionPane.showMessageDialog (null,
 											"Non puoi costruire qui",
 											"ERRORE",
@@ -209,7 +206,7 @@ public class GameGUI extends JFrame {
 						}
 					}
 				});
-				
+				//Gestione click sul bottone Salva
 				salvaButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						state.setAll(n, winner, players, numGiocatoriInGara, currentPlayer, board);
@@ -217,12 +214,12 @@ public class GameGUI extends JFrame {
 						JOptionPane.showMessageDialog(null, "SALVATA");
 					}
 				});
-				
+				//Gestione click sul bottone Vincitori
 				oldWinButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ArrayList<Player> playersWinner;
 						String winner ="";
-						playersWinner = db.findWinner();
+						playersWinner = db.findAllWinner();
 						if(playersWinner.size()>0) {
 							for (int j=0;j<playersWinner.size();j++) {
 								String nameWinner = playersWinner.get(j).getName();
@@ -232,6 +229,7 @@ public class GameGUI extends JFrame {
 							}
 
 						}
+						//Nel caso non ci sia nessuna partita salvato
 						else winner = "NESSUN VINCITORE NELLE SCORSE PARTITE";
 						JOptionPane.showMessageDialog (null,winner,
 								"Vincitori", JOptionPane.INFORMATION_MESSAGE);
@@ -240,14 +238,18 @@ public class GameGUI extends JFrame {
 				jframe.setSize(950,550);
 				GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 				jframe.setMaximizedBounds(env.getMaximumWindowBounds());
-				jframe.setExtendedState(jframe.getExtendedState() | jframe.MAXIMIZED_BOTH);
+				jframe.setExtendedState(jframe.getExtendedState() | jframe.MAXIMIZED_BOTH); 
 				jframe.setVisible(true);
 			}
 		});
 	}
-
-
-	public  void checkLosePlayer() {
+	/**
+	*
+	Scopo del metodo: Controllare se il giocatore ha perso
+	@param //
+	@return 
+	*/
+	public  void checkLosePlayer() { 
 		if(players[currentPlayer].getMoney()<=0) {
 			JOptionPane.showMessageDialog (null, ""+players[currentPlayer].getName() +"HA PERSO",
 					"GAME OVER", JOptionPane.INFORMATION_MESSAGE,
@@ -258,7 +260,11 @@ public class GameGUI extends JFrame {
 		}
 
 	}
-
+	/**
+	Scopo del metodo: Controllare il giocatore che ha vinto
+	@param //
+	@return 
+	*/
 	public  void checkWinner() {
 		for(int j=0;j<players.length;j++) {
 			if(players[j].getMoney()>0) {
