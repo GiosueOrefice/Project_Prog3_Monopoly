@@ -16,17 +16,17 @@ public class Banca {
 
 
 	public Banca(Player[] players) {
-			for(Player player: players) {
-				mediator.addBuyer(player);
-				player.setMediator(mediator);
-			}	
+		for(Player player: players) {
+			mediator.addBuyer(player);
+			player.setMediator(mediator);
+		}	
 	}
-	
+
 	/**
 	Scopo del metodo: Distribuire denaro in una nuova partia
 	@param Player[] players a cui distribuire denaro
 	@return 
- */
+	 */
 	public static void distribuisciDenaro(Player[] players) {
 		int money = 1000;
 		for(Player player: players) 
@@ -49,8 +49,7 @@ public class Banca {
 			property.setAcquisto(true);
 			message = player.getName() + " ha acquistato:" + property.getName() + " per " +
 					property.getCostoAcquisto();
-			if(!player.isCostruzione())
-				player.checkCostruire(property);
+			player.checkCostruire(property);
 		}
 		else {
 			message = "Non puoi acquistare questa proprieta'\n";	
@@ -88,13 +87,18 @@ public class Banca {
 	}
 
 	/**
-	Scopo del metodo: pagare il costo di una casa su una proprieta
+	Scopo del metodo: pagare il costo di una casa su una proprieta e costruirla 
 	@param property la proprieta dove si vuole costruire
 	@return 
 	 */
 	public static void costruisciCasa(Proprieta property) {
-		riscuoti(property.getPlayer(), property.getCostoCasa());
-		message = "Hai costruito una casa su " + property.getName();
+		if(!property.isAlbergo()) {
+			riscuoti(property.getPlayer(), property.getCostoCasa());
+			property.setNumCase(property.getNumCase()+1);
+			message = "Hai costruito una casa su " + property.getName();
+		}
+		else message = "Hai già un albergo, non puoi più costruire qui";
+
 	}
 
 	/**
