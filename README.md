@@ -56,7 +56,7 @@ GiosueOrefice
 Realizzare il gioco completo del monopoly.
 
 
-## Come gli utenti possono iniziare con il progetto
+## Come gli utenti possono provare il progetto
 
-Installare Derby e scaricare il progetto
+Installare Derby e aggiungerlo al progetto
 
