@@ -21,7 +21,12 @@ public class Banca {
 				player.setMediator(mediator);
 			}	
 	}
-
+	
+	/**
+	Scopo del metodo: Distribuire denaro in una nuova partia
+	@param Player[] players a cui distribuire denaro
+	@return 
+ */
 	public static void distribuisciDenaro(Player[] players) {
 		int money = 1000;
 		for(Player player: players) 
@@ -33,7 +38,7 @@ public class Banca {
 		Scopo del metodo: Acquistare una proprieta
 		@param player giocatore che vuole acquistare
 		@param property proprieta da acquistare
-		@return void
+		@return 
 	 */
 	public static void buyProprieta(Player player, Proprieta property) {
 		if(player.getMoney()>= property.getCostoAcquisto())
@@ -47,15 +52,17 @@ public class Banca {
 			if(!player.isCostruzione())
 				player.checkCostruire(property);
 		}
-		else
+		else {
 			message = "Non puoi acquistare questa proprieta'\n";	
+			asta(property);
+		}
 	}
 
 	/**
 	Scopo del metodo: Uscire di prigione pagando
 	@param player giocatore in prigione
 	@param prigione la prigione dove si trova il giocatore
-	@return void
+	@return 
 	 */
 	public static void esciPrigione(Player player, Prigione prigione) {
 		if(player.getMoney()>= prigione.getPrezzOut()) {
@@ -71,7 +78,7 @@ public class Banca {
 	Scopo del metodo: pagare l'affitto quando si atterra su una proprieta di un altro giocatore
 	@param player giocatore che deve pagare
 	@param property 
-	@return void
+	@return 
 	 */
 	public static void pagaAffitto(Player player, Proprieta property) {
 		player.setMoney(player.getMoney() - property.prezzoDaPagare());
@@ -83,7 +90,7 @@ public class Banca {
 	/**
 	Scopo del metodo: pagare il costo di una casa su una proprieta
 	@param property la proprieta dove si vuole costruire
-	@return void
+	@return 
 	 */
 	public static void costruisciCasa(Proprieta property) {
 		riscuoti(property.getPlayer(), property.getCostoCasa());
@@ -93,7 +100,7 @@ public class Banca {
 	/**
 	Scopo del metodo: pagare il costo di un albergo su una proprieta
 	@param property la proprieta dove si vuole costruire
-	@return void
+	@return 
 	 */
 	public static void costruisciAlbergo(Proprieta property) {
 		riscuoti(property.getPlayer(), property.getCostoAlbergo());
@@ -102,9 +109,9 @@ public class Banca {
 
 	/**
 	Scopo del metodo: riscuote da un giocatore del denaro
-	@param player
-	@param money
-	@return void
+	@param Player player
+	@param int money
+	@return 
 	 */
 	public static void riscuoti(Player player, int money) {
 		player.setMoney(player.getMoney() - money);
@@ -115,7 +122,7 @@ public class Banca {
 	Scopo del metodo: versare a un giocatore del denaro
 	@param player
 	@param money
-	@return void
+	@return 
 	 */
 	public static void versa(Player player, int money) {
 		player.setMoney(player.getMoney() + money);
@@ -127,16 +134,16 @@ public class Banca {
 	/**
 	Scopo del metodo: effettuare un asta quando un giocatore rifiuta di acuquistare una proprieta
 	@param proprieta
-	@return void
+	@return 
 	 */
 	public static void asta(Proprieta proprieta) {
-		mediator.eseguiAsta();
+		mediator.eseguiAsta(); 
 		Player winner = (Player)mediator.findHighestBidder();
 
-		proprieta.setPlayer(winner);
+		proprieta.setPlayer(winner); //imposta come proprietario
 		proprieta.setAcquistata(true);
-		winner.setProprieta(proprieta);
-		if(!winner.isCostruzione())
+		winner.setProprieta(proprieta); 
+		if(!winner.isCostruzione()) //se non può costruire controllare se adesso può
 			winner.checkCostruire(proprieta);
 		message = "";
 	}
