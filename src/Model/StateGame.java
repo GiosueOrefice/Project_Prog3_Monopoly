@@ -55,7 +55,7 @@ public class StateGame {
 	@return void
 	 */
 	private void setPanel(Board board) {
-		for(int j=0;j<16;j++) {
+		for(int j=0;j<board.getNumPanel();j++) {
 			if(board.getSquarePanel(j) instanceof PanelTerreno) {
 				PanelTerreno p = (PanelTerreno) board.getSquarePanel(j);
 				for(int k=0;k<n;k++) 
@@ -68,7 +68,7 @@ public class StateGame {
 	}
 
 	private void setProprieta(Board board) {
-		for(int j=0;j<12;j++) {
+		for(int j=0;j<board.getNumTerreni();j++) {
 			if(board.getSquare(j) instanceof Proprieta) {
 				Proprieta p = (Proprieta) board.getSquare(j);
 				if(p.getPlayer()!=null) {
