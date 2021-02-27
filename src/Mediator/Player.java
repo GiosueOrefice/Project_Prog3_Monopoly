@@ -31,22 +31,22 @@ public class Player extends AbstractPlayer implements Cloneable
 
 	/**
 	* Il metodo viene invocato quando si acquista una nuova proprieta
-	* e serve per capire se il giocatore può iniziare a costruire 
+	* e serve per capire se il giocatore può iniziare a costruire su una proprieta
 	* 
 	* @param property ultima proprieta acquistata
-	* @return costruzione se questo valore è true allora il giocatore può iniziare a costruire
+	* @return boolean costruzione se questo valore è true allora il giocatore può iniziare a costruire
 	*/
 	public boolean checkCostruire(Proprieta property) {
 		int cont=0;
-		for(int i=0;i<proprieta.size();i++) {
-			if(proprieta.get(i).getColor() == property.getColor())
+		for(Proprieta proprieta: proprieta) {
+			if(proprieta.getColor() == property.getColor())
 				cont++;
 		}
 		if (cont==2) {
 			this.costruzione=true;
-			for(int i=0;i<proprieta.size();i++) {
-				if(proprieta.get(i).getColor() == property.getColor())
-					proprieta.get(i).setCheckCostruire(true);
+			for(Proprieta proprieta: proprieta) {
+				if(proprieta.getColor() == property.getColor())
+					proprieta.setCheckCostruire(true);
 			}
 		}
 
@@ -58,14 +58,12 @@ public class Player extends AbstractPlayer implements Cloneable
 	* Il metodo viene invocato quando il giocatore deve costruire su una proprieta
 	*
 	* @param property ultima proprieta acquistata
-	* @return void
 	*/
 	public void costruisci(Proprieta property) {
 
-		if(property.getNumCase()<4) {
-			property.setNumCase(property.getNumCase()+1);
+		if(property.getNumCase()<4) 
 			Banca.costruisciCasa(property);
-		}
+		
 		else {
 			property.setNumCase(0);
 			property.setAlbergo(true);
@@ -92,13 +90,12 @@ public class Player extends AbstractPlayer implements Cloneable
 	/**
 	* Il metodo viene invocato quando si vogliono ottenere le statistiche di un giocatore
 	*
-	* @param //
-	* @return Stringa con le statistiche 
+	* @return String  Statistiche del giocatore 
 	*/
 	public String getStatistiche() {
 		String p = "Proprieta: ";
-		for(int i=0;i< proprieta.size() ;i++) {
-			p = p + proprieta.get(i).getName() + " - ";
+		for(Proprieta proprieta: proprieta) {
+			p = p + proprieta.getName() + " - ";
 		}
 		return "SOLDI: " + money + "\n" +  p +
 				"\nPOSIZIONE: "; 

@@ -14,14 +14,12 @@ public abstract class AbstractPlayer{
 	/**
 	Scopo del metodo: Effettuare l'offeta
 	@param price prezzo del'offerta
-	@return void
 	 */
 	public abstract void bid(int price); 
 
 	/**
    	Scopo del metodo: Ritirarsi dall'asta
-   	@param 
-   	@return void
+
 	 */
 	public abstract void cancelTheBid(); 
 

@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 public class ConcreteMediator implements Mediator {
 
 	private ArrayList<AbstractPlayer> buyers; 
-	private int numBuyers=0;
 	public ConcreteMediator() { 
 		buyers = new ArrayList<>(); 
 
@@ -21,21 +20,21 @@ public class ConcreteMediator implements Mediator {
 	@Override
 	public void addBuyer(AbstractPlayer buyer) { 
 		buyers.add(buyer); 
-		numBuyers += 1;
 	} 
 
 	@Override
 	public void eseguiAsta() { 	
-		int index,price=0,number;
+		int index,maxPrice,number;
 		ArrayList<AbstractPlayer> playersAsta = new ArrayList<AbstractPlayer>();
-		for(index=0; index<numBuyers;index++) {
-			buyers.get(index).price=0;
-			if(buyers.get(index).money>0)
-				playersAsta.add(buyers.get(index));
+		for(AbstractPlayer buyers : buyers) {
+			buyers.price=0;
+			if(buyers.money>0)
+				playersAsta.add(buyers);
 		}
 
 		int numPartecipanti = playersAsta.size();
 		index = 0;
+		maxPrice = 0;
 		while (numPartecipanti >1) {
 			try {
 				String input=JOptionPane.showInputDialog(null," " + playersAsta.get(index).getName() + 
@@ -51,9 +50,9 @@ public class ConcreteMediator implements Mediator {
 				}
 				number = Integer.parseInt(input);
 
-				if (price>= number) {
+				if (maxPrice>= number) {
 					JOptionPane.showMessageDialog (null,
-							"IL VALORE DELLA PUNTATA DEVE ESSERE MAGGIORE DI " + price,
+							"IL VALORE DELLA PUNTATA DEVE ESSERE MAGGIORE DI " + maxPrice,
 							"Attenzione",
 							JOptionPane.ERROR_MESSAGE);
 					continue;
@@ -67,7 +66,7 @@ public class ConcreteMediator implements Mediator {
 					continue;
 				}
 				playersAsta.get(index).bid(number);
-				price = number;
+				maxPrice = number;
 
 
 				if(++index >= numPartecipanti)
