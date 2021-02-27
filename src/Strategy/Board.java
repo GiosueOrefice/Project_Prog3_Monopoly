@@ -93,7 +93,7 @@ public class Board {
 	@return int -1 se non è presente nessun terreno con quel nome
 	*/
 	public int getSquare(String name) {
-		for(int i=0;i<12;i++) {
+		for(int i=0;i<numTerreni;i++) {
 			if(name.equals(terreno[i].getName()))
 				return i;
 		}
