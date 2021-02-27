@@ -221,8 +221,8 @@ public class GameGUI extends JFrame {
 						String winner ="";
 						playersWinner = db.findAllWinner();
 						if(playersWinner.size()>0) {
-							for (int j=0;j<playersWinner.size();j++) {
-								String nameWinner = playersWinner.get(j).getName();
+							for (Player player: playersWinner) {
+								String nameWinner = player.getName();
 								if(nameWinner.equals("Player-1"))
 									nameWinner= "Partita non conclusa";
 								winner+= nameWinner + "\n";
