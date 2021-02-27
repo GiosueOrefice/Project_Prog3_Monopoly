@@ -147,7 +147,7 @@ public class DerbyDB implements DAO{
 		Player[] players;
 		boolean check=false;
 		int i=-1,n=0,numGiocatori=0,winner=-1;
-		try { //rova il game con l'id di input
+		try { //trova il game con l'id di input
 			ResultSet result;
 			sql = "Select * from Game";
 			result= statement.executeQuery(sql);
