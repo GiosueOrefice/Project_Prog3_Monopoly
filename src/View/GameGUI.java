@@ -236,9 +236,7 @@ public class GameGUI extends JFrame {
 					}
 				});
 				jframe.setSize(950,550);
-				GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
-				jframe.setMaximizedBounds(env.getMaximumWindowBounds());
-				jframe.setExtendedState(jframe.getExtendedState() | jframe.MAXIMIZED_BOTH); 
+				jframe.setResizable(false);
 				jframe.setVisible(true);
 			}
 		});
