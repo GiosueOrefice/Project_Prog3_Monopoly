@@ -46,16 +46,6 @@ effettuate.
 
 * Draw.io 
 
-## Chi mantiene e contribuisce al progetto
-
-GiosueOrefice
-
-
-## Roadmap
-
-Realizzare il gioco completo del monopoly.
-
-
 ## Come gli utenti possono provare il progetto
 
 Installare Derby e aggiungerlo al progetto
